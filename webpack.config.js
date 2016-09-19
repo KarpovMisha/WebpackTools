@@ -13,9 +13,14 @@ module.exports = {
         publicPath: '/build/',
         filename: "bundle.js"
     },
+    
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        modulesDirectories: [
+            'node_modules'
+        ],
+        extensions: ['', '.json', '.js']
     },
+
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin()
@@ -34,5 +39,5 @@ module.exports = {
     },
     postcss: function () {
         return [autoprefixer, precss];
-    },
+    }
 };
