@@ -1,0 +1,19 @@
+@import '../variables.scss';
+
+html {
+  color: #222;
+  font-weight: 100;
+  font-family: $font-family;
+}
+
+.container {
+  color: $red;
+  h1{
+    font-size: 26px;
+  }
+  h2{
+    font-size: 20px;
+  }
+}
+
+
