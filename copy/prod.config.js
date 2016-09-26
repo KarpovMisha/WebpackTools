@@ -5,13 +5,12 @@ var precss = require('precss');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var projectRootPath = path.resolve(__dirname, '../');
 var assetsPath = path.resolve(projectRootPath, './static/dist');
-var CleanPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-    devtool: 'cheap-module-source-map',
+    devtool: 'source-map',
     entry: [
         'webpack-dev-server/client?http://localhost:8080',
-        './src/javascripts/client'
+        './src/javascripts/client',
     ],
     output: {
         path: assetsPath,
@@ -29,11 +28,12 @@ module.exports = {
     },
 
     plugins: [
-        new CleanPlugin([assetsPath], { root: projectRootPath }),
         new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
-                warnings: false
+                warnings: false,
+                drop_console: true,
+                unsafe: true
             }
         })
     ],

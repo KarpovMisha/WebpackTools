@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {} from 'stylesheets/main.scss';
 
 // минификация продакшена js, css
-// удаления папки dist (clean webpack plugin)
+    // удаления папки dist (clean webpack plugin)
 //  webpack hot reloader
 
 class App extends Component {
@@ -16,5 +16,6 @@ class App extends Component {
         );
     }
 }
+
 
 export default App;

@@ -5,7 +5,6 @@ var precss = require('precss');
 
 module.exports = {
     entry: [
-        'webpack/hot/dev-server',
         'webpack-dev-server/client?http://localhost:8080',
         './src/javascripts/client'
     ],
@@ -13,9 +12,8 @@ module.exports = {
         path: path.resolve(__dirname, 'static', 'build'),
         publicPath: '/static/build/',
         filename: "bundle.js"
-        
     },
-
+    
     resolve: {
         modulesDirectories: [
             'node_modules',
@@ -25,6 +23,7 @@ module.exports = {
     },
 
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin()
         
     ],
