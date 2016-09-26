@@ -4,9 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --hot --config webpack/dev.config.js",
+    "dev": "webpack-dev-server --inline --watch --hot --config webpack/dev.config.js",
     "build": "webpack --verbose --colors --display-error-details --config webpack/prod.config.js"
   },
+  "keywords": [
+    "webpack",
+    "webpack-dev-server",
+    "CLI",
+    "HMR",
+    "hot module replacement"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {

@@ -11,7 +11,7 @@ class App extends Component {
         return (
                 <div className="row">
                     <div className="col-lg-6"><h1>hello</h1></div>
-                    <div className="col-lg-6"><h2>World</h2></div>
+                    <div className="col-lg-6"><h2>World!!!</h2></div>
                 </div>
         );
     }

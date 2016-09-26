@@ -26,7 +26,7 @@ module.exports = {
 
     plugins: [
         new webpack.NoErrorsPlugin()
-        
+
     ],
     module: {
         loaders: [
