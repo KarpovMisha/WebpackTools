@@ -3,25 +3,26 @@ import React, {Component} from 'react';
 import {} from 'stylesheets/main.scss';
 
 
-
-var Photo  = React.createClass({
-    render: function() {
+class Photo extends React.Component {
+    render() {
         return (
             <div className="photo">
-
-                    <img src={this.props.img}/>
-
+                <img src={this.props.img}/>
             </div>
         );
     }
-});
-var PhotoList = React.createClass({
+}
 
-    getInitialState: function() {
-        return {data: []};
-    },
-    
-    loadInstagram: function() {
+class PhotoList extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: []
+        };
+    }
+
+    loadInstagram() {
         var token = '3976132359.575dadc.37f299ea6512452d9bab7b300cbd0b82',
             num_photos = 4;
 
@@ -30,25 +31,25 @@ var PhotoList = React.createClass({
             dataType: 'jsonp',
             type: 'GET',
             data: {access_token: token, count: num_photos},
-            success: function(data) {
+            success: function (data) {
                 this.setState({data: data.data});
             }.bind(this)
         });
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.loadInstagram();
         setInterval(this.loadInstagram, 10000
         );
-    },
+    }
 
-    render : function(){
-        var photoList = this.state.data.map(function(photo){
-            return(
-                <Photo img={photo.images.low_resolution.url} />
+    render() {
+        var photoList = this.state.data.map(function (photo) {
+            return (
+                <Photo img={photo.images.low_resolution.url}/>
             )
         });
-        return(
+        return (
             <div>
                 <div className="row">
                     {photoList}
@@ -56,8 +57,7 @@ var PhotoList = React.createClass({
             </div>
         );
     }
-});
-
+}
 
 
 export default PhotoList;
