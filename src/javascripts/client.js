@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PhotoList from './app/App.jsx';
+//import App from './app/PhotoInstagram';
+//import App from './app/twitterLenta';
+import App from './app/facebookNews';
 
 
 
 ReactDOM.render(
-    <PhotoList/>,
+    <App/>,
    document.querySelector('.container')
 );
 

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-
 import {} from 'stylesheets/main.scss';
-
 
 class Photo extends React.Component {
     render() {
@@ -13,7 +11,7 @@ class Photo extends React.Component {
     }
 }
 
-class PhotoList extends React.Component {
+class App extends React.Component {
 
     constructor(props) {
         super(props);
@@ -23,6 +21,7 @@ class PhotoList extends React.Component {
     }
 
     loadInstagram() {
+
         var token = '3976132359.575dadc.37f299ea6512452d9bab7b300cbd0b82',
             num_photos = 4;
 
@@ -35,12 +34,27 @@ class PhotoList extends React.Component {
                 this.setState({data: data.data});
             }.bind(this)
         });
+
+    /*
+        superagent
+            .get('https://api.instagram.com/v1/users/self/media/recent')
+            .send({access_token: 'token', count: num_photos})
+            .use(jsonp)
+            .set('Accept', 'application/jsonp')
+            .end(function (err, res) {
+                if (err || !res.ok) {
+                    console.log(err);
+                } else {
+                    alert('yay got ');
+                    this.setState({data: res.body});
+                }
+            });
+    */
     }
 
     componentDidMount() {
         this.loadInstagram();
-        setInterval(this.loadInstagram, 10000
-        );
+        //setInterval(this.loadInstagram, 10000);
     }
 
     render() {
@@ -52,6 +66,7 @@ class PhotoList extends React.Component {
         return (
             <div>
                 <div className="row">
+                    <h1>photo</h1>
                     {photoList}
                 </div>
             </div>
@@ -60,4 +75,4 @@ class PhotoList extends React.Component {
 }
 
 
-export default PhotoList;
+export default App;
