@@ -21,8 +21,8 @@ class App extends React.Component {
             posts: [],
             offset: 0,
             pageNum: 0,
-            limit: 3,
-            count: 9
+            limit: 3,    //постов на одну страничку
+            count: 15   //всего постов
         };
     }
 
@@ -71,7 +71,7 @@ class App extends React.Component {
                 limit: this.state.count
             },
             function (response) {
-                let page = response.data.length/2;
+                let page = response.data.length/app.state.limit;
                 app.setState({pageNum:page});
             }
         );
@@ -79,14 +79,8 @@ class App extends React.Component {
 
     handlePageClick(data) {
         var app = this;
-        console.log(data.selected);
-        if(data.selected == 0){
-            app.setState({offset: 0});
-            app.feedNews(FB);
-        }else {
-            app.setState({offset: (data.selected + 1) * this.state.limit});
-            app.feedNews(FB);
-        }
+        app.setState({offset: (data.selected) * this.state.limit});
+        app.feedNews(FB);
     }
 
     componentWillMount(){
