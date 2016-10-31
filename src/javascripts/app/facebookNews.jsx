@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {} from 'stylesheets/main.scss';
 import ReactPaginate from 'react-paginate';
 
-class Photo extends React.Component {
+class Photo extends Component {
     render() {
         return (
             <div className="photo">
@@ -13,7 +13,7 @@ class Photo extends React.Component {
     }
 }
 
-class App extends React.Component {
+class App extends Component {
 
     constructor(props) {
         super(props);
@@ -21,13 +21,13 @@ class App extends React.Component {
             posts: [],
             offset: 0,
             pageNum: 0,
-            limit: 3,    //постов на одну страничку
+            limit:5,    //постов на одну страничку
             count: 15   //всего постов
         };
     }
 
     facebook() {
-        var app = this;
+        const app = this;
         window.fbAsyncInit = function () {
             FB.init({
                 appId: '1824715864406732',
@@ -36,7 +36,7 @@ class App extends React.Component {
             });
             app.feedNews(FB);
             app.newsOnePage(FB);
-    };
+        };
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {return;}
@@ -48,7 +48,7 @@ class App extends React.Component {
     }
 
     feedNews(FB) {
-        var app = this;
+        const app = this;
         FB.api(
             'talkpr/posts?fields=message,picture',
             {
@@ -56,53 +56,53 @@ class App extends React.Component {
                 limit: this.state.limit,
                 offset: this.state.offset
             },
-            function (response) {
-                app.setState({posts: response.data});
+            ({data}) => {
+                app.setState({posts: data});
             }
         );
     }
 
     newsOnePage(FB){
-        var app = this;
+        const app = this;
         FB.api(
             'talkpr/posts?fields=message,picture',
             {
                 "access_token": "1824715864406732|Jv4js3dY0kP2XvC8-0O8p91Nm2E",
                 limit: this.state.count
             },
-            function (response) {
-                let page = response.data.length/app.state.limit;
+            ({data}) => {
+                let page = data.length/app.state.limit;
                 app.setState({pageNum:page});
             }
         );
     }
 
-    handlePageClick(data) {
-        var app = this;
-        app.setState({offset: (data.selected) * this.state.limit});
+    handlePageClick = ({selected}) => {
+        const app = this;
+        app.setState({offset: (selected) * this.state.limit});
         app.feedNews(FB);
-    }
+    };
 
     componentWillMount(){
         this.facebook();
     }
 
     render() {
-        var photoList = this.state.posts.map(function (photo, index) {
-            return (
-                    <Photo key={index} img={photo.picture} desc={photo.message}/>
-            )
-        });
+        const posts = this.state.posts;
         return (
-            <div>
-                <div className="row">
-                    {photoList}
-                    <ReactPaginate clickCallback={this.handlePageClick}
-                                   pageNum={this.state.pageNum}
+            <div className="row">
+                    {posts.map((c, i) =>
+                        <Photo
+                            key={i}
+                            img={c.picture}
+                            desc={c.message}
+                        />
+                    )}
+                    <ReactPaginate pageNum={this.state.pageNum}
                                    containerClassName={"pagination"}
                                    clickCallback={this.handlePageClick.bind(this)}
-                                   activeClassName={"active"}/>
-                </div>
+                                   activeClassName={"active"}
+                    />
             </div>
         );
     }
