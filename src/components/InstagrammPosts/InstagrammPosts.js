@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {} from 'stylesheets/main.scss';
 
-class Photo extends React.Component {
+class Photo extends Component {
     render() {
         return (
             <div className="photo">
@@ -11,7 +11,7 @@ class Photo extends React.Component {
     }
 }
 
-class App extends React.Component {
+export default class InstagrammPosts extends Component {
 
     constructor(props) {
         super(props);
@@ -23,7 +23,7 @@ class App extends React.Component {
     loadInstagram() {
 
         var token = '3976132359.575dadc.37f299ea6512452d9bab7b300cbd0b82',
-            num_photos = 4;
+            num_photos = 5;
 
         $.ajax({
             url: 'https://api.instagram.com/v1/users/self/media/recent',
@@ -66,7 +66,7 @@ class App extends React.Component {
         return (
             <div>
                 <div className="row">
-                    <h1>photo</h1>
+                    <h1>Instagramm</h1>
                     {photoList}
                 </div>
             </div>
@@ -74,5 +74,3 @@ class App extends React.Component {
     }
 }
 
-
-export default App;

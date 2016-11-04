@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import myPosts from './posts';
 
-export default class Photo extends Component {
+export default class Post extends Component {
     static propTypes = {
         desc: PropTypes.string,
         img: PropTypes.string.isRequired
@@ -11,7 +10,6 @@ export default class Photo extends Component {
         const {img, desc} = this.props;
 
         return (
-
             <div className="photo">
                 <img src={img} />
                 <div className="desc">{desc}</div>
