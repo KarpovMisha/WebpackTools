@@ -7,8 +7,8 @@ import App from './app/facebookNews';
 
 
 ReactDOM.render(
-    <App/>,
-   document.querySelector('.container')
+<App/>,
+    document.querySelector('.container')
 );
 
 
@@ -20,4 +20,3 @@ ReactDOM.render(
 if (module.hot) {
     module.hot.accept();
 }
-

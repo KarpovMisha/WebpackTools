@@ -4,6 +4,7 @@ var autoprefixer = require('autoprefixer');
 var precss = require('precss');
 
 module.exports = {
+    devtool: 'inline-source-map',
     entry: [
         'webpack/hot/dev-server',
         'webpack-dev-server/client?http://localhost:8080',
@@ -13,7 +14,7 @@ module.exports = {
         path: path.resolve(__dirname, 'static', 'build'),
         publicPath: '/static/build/',
         filename: "bundle.js"
-        
+
     },
 
     resolve: {
@@ -37,7 +38,7 @@ module.exports = {
             }, {
                 test: /\.(sass|scss)$/,
                 loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
-            } 
+            }
         ]
     },
     postcss: function () {
