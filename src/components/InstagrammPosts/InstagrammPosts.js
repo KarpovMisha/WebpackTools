@@ -1,76 +1,61 @@
 import React, {Component} from 'react';
 import {} from 'stylesheets/main.scss';
+import config from 'config';
 
 class Photo extends Component {
-    render() {
-        return (
-            <div className="photo">
-                <img src={this.props.img}/>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="photo">
+        <img src={this.props.img}/>
+      </div>
+    );
+  }
 }
 
 export default class InstagrammPosts extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: []
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      amountPhotos: 5
+    };
+    this.loadInstagram = this.loadInstagram.bind(this);
+  }
 
-    loadInstagram() {
+  loadInstagram() {
+    $.ajax({
+      url: config.urlInstagramm,
+      dataType: 'jsonp',
+      type: 'GET',
+      data: {
+              access_token: config.tokenInstagramm,
+              count: this.state.amountPhotos
+            },
+      success: ({data}) => {
+        this.setState({data});
+      }
+    });
+  }
 
-        var token = '3976132359.575dadc.37f299ea6512452d9bab7b300cbd0b82',
-            num_photos = 5;
+  componentWillMount() {
+    this.loadInstagram();
+    //setInterval(this.loadInstagram, 10000);
+  }
 
-        $.ajax({
-            url: 'https://api.instagram.com/v1/users/self/media/recent',
-            dataType: 'jsonp',
-            type: 'GET',
-            data: {access_token: token, count: num_photos},
-            success: function (data) {
-                this.setState({data: data.data});
-            }.bind(this)
-        });
-
-    /*
-        superagent
-            .get('https://api.instagram.com/v1/users/self/media/recent')
-            .send({access_token: 'token', count: num_photos})
-            .use(jsonp)
-            .set('Accept', 'application/jsonp')
-            .end(function (err, res) {
-                if (err || !res.ok) {
-                    console.log(err);
-                } else {
-                    alert('yay got ');
-                    this.setState({data: res.body});
-                }
-            });
-    */
-    }
-
-    componentDidMount() {
-        this.loadInstagram();
-        //setInterval(this.loadInstagram, 10000);
-    }
-
-    render() {
-        var photoList = this.state.data.map(function (photo) {
-            return (
-                <Photo img={photo.images.low_resolution.url}/>
-            )
-        });
-        return (
-            <div>
-                <div className="row">
-                    <h1>Instagramm</h1>
-                    {photoList}
-                </div>
-            </div>
-        );
-    }
+  render() {
+    const {  data } = this.state;
+    return (
+      <div className="row">
+        <h1>Instagramm</h1>
+        {
+          data.map((c) =>
+            <Photo
+              img={c.images.low_resolution.url}
+            />
+          )
+        }
+      </div>
+    );
+  }
 }
-
