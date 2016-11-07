@@ -80,7 +80,7 @@ export default class FacebookPosts extends Component {
     const {posts, pageNum} = this.state;
     return (
       <div className="row">
-        <h1>Facebook</h1>
+        <h1>FacebookPost</h1>
         <Posts
           posts={posts}
         />

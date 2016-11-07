@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { FacebookPosts, InstagrammPosts } from 'components';
+import Home from '../Home/Home';
 
 export default class App extends Component{
   render(){
     return(
       <div>
-        <FacebookPosts />
-        <InstagrammPosts />
+        <Home />
       </div>
     );
   }
