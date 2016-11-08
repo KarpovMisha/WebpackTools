@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { FacebookPosts } from 'components';
 
-export default class FacebookPosts extends Component{
+export default class Facebook extends Component{
   render() {
     return (
-      <FacebookPosts />
+      <div>vjjbjbhjbasdsdasdsd</div>
     );
   }
 }

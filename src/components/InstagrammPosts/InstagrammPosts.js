@@ -12,7 +12,7 @@ class Photo extends Component {
   }
 }
 
-export default class InstagrammPosts extends Component {
+export default class InstagramPosts extends Component {
 
   constructor(props) {
     super(props);
@@ -49,9 +49,10 @@ export default class InstagrammPosts extends Component {
       <div className="row">
         <h1>Instagramm</h1>
         {
-          data.map((c) =>
+          data.map((c, i) =>
             <Photo
               img={c.images.low_resolution.url}
+              key={i}
             />
           )
         }

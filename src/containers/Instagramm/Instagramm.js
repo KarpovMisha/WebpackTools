@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { InstagramPost } from 'components';
 
-export default class InstagramPost extends Component{
+export default class Instagram extends Component{
   render() {
     return (
       <InstagrammPosts />

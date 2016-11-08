@@ -11,7 +11,7 @@ export default class FacebookPosts extends Component {
       posts: [],
       offset: 0,
       pageNum: 0,
-      limit: 4,    //постов на одну страничку
+      limit: 3,    //постов на одну страничку
       count: 12   //всего постов
     };
     this.click = this.click.bind(this);
@@ -80,7 +80,7 @@ export default class FacebookPosts extends Component {
     const {posts, pageNum} = this.state;
     return (
       <div className="row">
-        <h1>FacebookPost</h1>
+        <h1>Facebook!!!!!</h1>
         <Posts
           posts={posts}
         />

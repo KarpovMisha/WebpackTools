@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Home, Instagram } from 'containers';
+import { IndexRoute, Route } from 'react-router';
+import { App, Home, Instagram, Facebook } from 'containers';
 
-export default class Home extends Component{
-  render() {
-    return (
-
-    );
-  }
-}
+export const routes = (
+  <Route path='/' component={App}>
+    <IndexRoute component={Home} />
+    <Route path='instagram' component={Instagram} />
+    <Route path='facebook' component={Facebook} />
+  </Route>
+)
