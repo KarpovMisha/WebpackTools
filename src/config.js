@@ -1,4 +1,6 @@
-export default {
+require('babel-polyfill');
+
+module.exports = {
   urlFB: 'talkpr/posts?fields=message,picture',
   urlInstagramm: 'https://api.instagram.com/v1/users/self/media/recent',
   tokenFacebook: '1824715864406732|Jv4js3dY0kP2XvC8-0O8p91Nm2E',

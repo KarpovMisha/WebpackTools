@@ -2,17 +2,21 @@ var path = require("path");
 var webpack = require("webpack");
 var autoprefixer = require('autoprefixer');
 var precss = require('precss');
+var host = (process.env.HOST || 'localhost');
+var port = (+process.env.PORT + 1) || 3001;
+var assetsPath = path.resolve(__dirname, '../static/dist');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'inline-source-map',
   entry: [
-    'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr',
-    './src/client'
+    'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr',
+    './src/client.js'
   ],
   output: {
-    path: path.resolve(__dirname, 'static', 'build'),
+    path: assetsPath,
     filename: "bundle.js",
-    publicPath: 'http://localhost:8080/static/build/'
+    publicPath: 'http://' + host + ':' + port + '/dist/'
   },
 
   resolve: {
@@ -24,9 +28,21 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new HtmlWebpackPlugin({
+      inject: 'body',
+      filename: 'index.html',
+      template: path.resolve(__dirname, '..', 'static', 'index.html'),
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        removeAttributeQuotes: true,
+        collapseBooleanAttributes: true
+      }
+    })
+    // new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.NoErrorsPlugin()
   ],
   module: {
     loaders: [
@@ -44,3 +60,5 @@ module.exports = {
       return [autoprefixer, precss];
   }
 };
+
+

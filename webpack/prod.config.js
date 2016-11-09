@@ -4,20 +4,20 @@ var autoprefixer = require('autoprefixer');
 var precss = require('precss');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var projectRootPath = path.resolve(__dirname, '../');
-var assetsPath = path.resolve(projectRootPath, './static/dist');
+var assetsPath = path.resolve(__dirname, '../static/dist');
 var CleanPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     devtool: 'cheap-module-source-map',
     entry: [
-        'webpack-dev-server/client?http://localhost:8080',
-        './src/javascripts/client'
+        './src/client'
     ],
     output: {
         path: assetsPath,
         publicPath: '/dist/',
-        filename: '[name]-[chunkhash].js',
-        chunkFilename: '[name]-[chunkhash].js'
+        // filename: '[name].js',
+        filename: "bundle.js",
+        chunkFilename: '[name].js'
     },
 
     resolve: {
@@ -30,7 +30,7 @@ module.exports = {
 
     plugins: [
         new CleanPlugin([assetsPath], { root: projectRootPath }),
-        new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
+        new ExtractTextPlugin('[name].css', {allChunks: true}),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
