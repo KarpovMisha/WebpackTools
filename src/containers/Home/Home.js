@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
-import { FacebookPosts, InstagramPosts } from 'components';
+import React, { Component, PropTypes } from 'react';
+import { FacebookPosts, CreatePost } from 'components';
 
-export default class Home extends Component{
+export default class Home extends Component {
+  static propTypes = {
+    params: PropTypes.object
+  };
+
   render() {
     return (
-     <div>
-        <FacebookPosts />
-
+      <div>
+        <FacebookPosts newProps={this.props.params} />
+        <CreatePost / >
       </div>
     );
   }

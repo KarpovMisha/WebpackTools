@@ -1,8 +1,56 @@
 require('babel-polyfill');
 
-module.exports = {
-  urlFB: 'talkpr/posts?fields=message,picture',
-  urlInstagramm: 'https://api.instagram.com/v1/users/self/media/recent',
-  tokenFacebook: '1824715864406732|Jv4js3dY0kP2XvC8-0O8p91Nm2E',
-  tokenInstagramm:'3976132359.575dadc.37f299ea6512452d9bab7b300cbd0b82'
-};
+const environment = {
+  development: {
+    isProduction: false
+  },
+  production: {
+    isProduction: true
+  }
+}[process.env.NODE_ENV || 'development'];
+
+module.exports = Object.assign({
+  host: process.env.HOST || 'localhost',
+  port: process.env.PORT,
+  apiHost: process.env.APIHOST || 'localhost',
+  apiPort: process.env.APIPORT,
+  apiPrefix: '/api',
+  apiUrl: `http://${process.env.APIHOST}:${process.env.APIPORT}`,
+  apiTokenKey: 'x-access-token',
+  tokenExpire: 14, // in days
+  app: {
+    title: 'TODO',
+    description: 'TODO description',
+    head: {
+      htmlAttributes: {
+        lang: 'en'
+      },
+      title: 'TODO',
+      meta: [
+        { name: 'description', content: '' },
+        { charset: 'utf-8' },
+        { property: 'og:site_name', content: 'TODO' },
+        { property: 'og:locale', content: 'en_US' },
+        { property: 'og:title', content: 'TODO' },
+        { property: 'og:description', content: '' },
+        { property: 'og:image', content: '/logo.jpg' },
+        { property: 'og:image:width', content: '200' },
+        { property: 'og:image:height', content: '200' }
+      ]
+    },
+    notFound: {
+      title: 'TODO',
+      meta: [
+        { name: 'description', content: 'TODO description' },
+        { charset: 'utf-8' },
+        { property: 'og:site_name', content: 'TODO' },
+        { property: 'og:locale', content: 'en_US' },
+        { property: 'og:title', content: 'TODO' },
+        { property: 'og:description', content: 'TODO description' },
+        { property: 'og:image', content: '/logo.jpg' },
+        { property: 'og:image:width', content: '200' },
+        { property: 'og:image:height', content: '200' }
+      ]
+    }
+  }
+}, environment);

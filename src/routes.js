@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { IndexRoute, Route } from 'react-router';
-import { App, Home, Instagram, Facebook } from 'containers';
+import { App, Home, Network } from 'containers';
 
-export const routes = (
-  <Route path='/' component={App}>
-    <IndexRoute component={Home} />
-    <Route path='instagram' component={Instagram} />
-    <Route path='facebook' component={Facebook} />
-  </Route>
-)
+export default (store) => {
+  return (
+    <Route path="/" component={App}>
+      <IndexRoute component={Home} />
+      <Route path="twitter" component={Network} />
+      <Route path="/facebook/:id" component={Home} />
+    </Route>
+  );
+};

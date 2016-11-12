@@ -20,7 +20,8 @@ var serverOptions = {
 };
 
 var app = new Express();
-
+app.disable('etag');
+app.disable('x-powered-by');
 app.use(require('webpack-dev-middleware')(compiler, serverOptions));
 app.use(require('webpack-hot-middleware')(compiler));
 

@@ -1,0 +1,16 @@
+{
+  "execMap": {
+    "js": "node --use_strict"
+  },
+  "ext": "js html",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules"
+  ],
+  "verbose": true,
+  "watch": [
+    "backend/",
+    "common/",
+    "public/errors/"
+  ]
+}

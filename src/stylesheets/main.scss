@@ -1,23 +1,18 @@
-@import "mixins/bootstrap/bootstrap";
-
+//@import "./mixins/bootstrap/bootstrap";
 
 body{
-
+  width: 600px;
 }
-.col-lg-6 {
+
+.row {
   h1 {
     font-size: 40px;
   }
 }
-.desc{
 
-
-}
-.photo{
+.photo {
   display: inline-block;
   height: 150px;
   width: 230px;
 }
-.pagination{
 
-}

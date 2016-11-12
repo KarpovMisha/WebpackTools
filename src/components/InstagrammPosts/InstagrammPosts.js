@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {} from 'stylesheets/main.scss';
 import config from 'config';
 
 class Photo extends Component {

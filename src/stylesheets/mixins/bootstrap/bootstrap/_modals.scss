@@ -15,7 +15,8 @@
 // Container that the modal scrolls within
 .modal {
   display: none;
-  overflow: hidden;
+  overflow: auto;
+  overflow-y: scroll;
   position: fixed;
   top: 0;
   right: 0;
@@ -86,6 +87,10 @@
   margin-top: -2px;
 }
 
+.modal-close {
+  display: none;
+}
+
 // Title text within header
 .modal-title {
   margin: 0;
@@ -95,7 +100,7 @@
 // Modal body
 // Where all modal content resides (sibling of .modal-header and .modal-footer)
 .modal-body {
-  position: relative;
+  // position: relative;
   padding: $modal-inner-padding;
 }
 

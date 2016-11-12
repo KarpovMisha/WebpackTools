@@ -1,4 +1,19 @@
-node_modules
-.idea
-static/build
-copy
+# Webstorm
+.idea/
+
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+
+node_modules/
+dist/
+*.iml
+.DB
+webpack-assets.json
+webpack-stats.json
+npm-debug.log
+.vagrant/
+
+*.sublime-workspace
+*.sublime-project

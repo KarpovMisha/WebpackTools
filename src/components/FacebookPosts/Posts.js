@@ -1,4 +1,4 @@
-import React, { Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import Post from './Post';
 import ReactPaginate from 'react-paginate';
 
@@ -9,7 +9,7 @@ export default class Posts extends Component {
 
   render() {
     const { posts } = this.props;
-    return(
+    return (
       <div>
         {
           posts.map((c, i) =>
@@ -21,7 +21,7 @@ export default class Posts extends Component {
           )
         }
       </div>
-      )
+    );
   }
 }
 

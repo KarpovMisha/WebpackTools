@@ -1,2 +1,3 @@
 export FacebookPosts from './FacebookPosts/FacebookPosts';
-export InstagramPosts from './InstagrammPosts/InstagrammPosts'
+export Twitter from './Twitter/Twitter';
+export CreatePost from './CreatePost/CreatePost';

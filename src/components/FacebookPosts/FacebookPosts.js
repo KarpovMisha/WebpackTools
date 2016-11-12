@@ -1,20 +1,38 @@
-import React, { Component } from 'react';
-import {} from 'stylesheets/main.scss';
+import React, { Component, PropTypes } from 'react';
 import ReactPaginate from 'react-paginate';
-import config from 'config';
 import Posts from './Posts';
+import { push } from 'react-router-redux';
 
 export default class FacebookPosts extends Component {
+  static propTypes = {
+    params: PropTypes.object
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       posts: [],
       offset: 0,
       pageNum: 0,
+      FBsdk: {},
       limit: 3,    //постов на одну страничку
       count: 12   //всего постов
     };
     this.click = this.click.bind(this);
+  }
+
+  componentWillMount() {
+    if (typeof window !== 'undefined') {
+      this.loadPostsFacebook();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.newProps.id);
+
+    const selected = nextProps.newProps.id;
+    const shift = selected * this.state.limit;
+    this.loadFeedNews(shift);
   }
 
   loadPostsFacebook() {
@@ -24,63 +42,63 @@ export default class FacebookPosts extends Component {
         xfbml: false,
         version: 'v2.8'
       });
-      this.loadFeedNews(FB);
-      this.loadNewsOnePage(FB);
+      this.setState({ FBsdk: FB });
+      this.loadFeedNews();
+      this.loadNewsOnePage();
+
     };
 
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
+    ((d, s, id) => {
+      let js = d.getElementsByTagName(s)[0];
+      const fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) {return;}
       js = d.createElement(s);
       js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk/debug.js";
+      js.src = '//connect.facebook.net/en_US/sdk/debug.js';
       fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    })(document, 'script', 'facebook-jssdk');
   }
 
-  loadFeedNews(FB, offset) {
+  loadNewsOnePage() {
+    const FB = this.state.FBsdk;
     FB.api(
-      config.urlFB,
+      'talkpr/posts?fields=message,picture',
       {
-        "access_token": config.tokenFacebook,
+        access_token: '1824715864406732|Jv4js3dY0kP2XvC8-0O8p91Nm2E',
+        limit: this.state.count
+      },
+      ({ data }) => {
+        const page = data.length / this.state.limit;
+        this.setState({ pageNum: page });
+      }
+    );
+  }
+
+  loadFeedNews(shift) {
+    const FB = this.state.FBsdk;
+    FB.api(
+      'talkpr/posts?fields=message,picture',
+      {
+        access_token: '1824715864406732|Jv4js3dY0kP2XvC8-0O8p91Nm2E',
         limit: this.state.limit,
-        offset: offset
+        offset: shift
       },
 
-      ({data}) => {
-        this.setState({posts: data});
+      ({ data }) => {
+        this.setState({ posts: data });
       }
     );
   }
 
-  loadNewsOnePage(FB) {
-    FB.api(
-      config.urlFB,
-      {
-        "access_token": config.tokenFacebook,
-        limit:  this.state.count
-      },
-      ({data}) => {
-        const page = data.length/this.state.limit;
-        this.setState({pageNum:page});
-      }
-    );
-  }
-
-  click({selected}) {
-    let offset = selected * this.state.limit;
-    this.loadFeedNews(FB, offset);
-  }
-
-  componentWillMount(){
-    this.loadPostsFacebook();
+  click({ selected }) {
+    this.context.router.push(`/facebook/${selected}`);
   }
 
   render() {
-    const {posts, pageNum} = this.state;
+    const { posts, pageNum } = this.state;
     return (
       <div className="row">
-        <h1>1234asd</h1>
+        <h1>Facebook</h1>
         <Posts
           posts={posts}
         />
@@ -94,3 +112,7 @@ export default class FacebookPosts extends Component {
     );
   }
 }
+
+FacebookPosts.contextTypes = {
+  router: PropTypes.object.isRequired
+};

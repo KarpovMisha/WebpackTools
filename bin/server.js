@@ -1,19 +1,27 @@
-var Express = require('express');
+#!/usr/bin/env node
+require('../server.babel'); // babel registration (runtime transpilation for node)
 var path = require('path');
+var rootDir = path.resolve(__dirname, '..');
+/**
+ * Define isomorphic constants.
+ */
+global.__CLIENT__ = false;
+global.__SERVER__ = true;
+global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
+global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 
-var app = Express();
-var port = 8080;
-
-app.use(Express.static(path.join(__dirname, '..', 'static')));
-
-app.use(function(req, res) {
-  res.send(path.resolve('static/index.html'));
-});
-
-app.listen(port, function(error) {
-  if (error) {
-    console.error(error)
-  } else {
-    console.log("Express server listening on port", port);
+if (__DEVELOPMENT__) {
+  if (!require('piping')({
+      hook: true,
+      ignore: /(\/\.|~$|\.json|\.scss$)/i
+    })) {
+    return;
   }
-});
+}
+
+// https://github.com/halt-hammerzeit/webpack-isomorphic-tools
+var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
+global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/webpack-isomorphic-tools'))
+  .server(rootDir, function() {
+    require('../src/server');
+  });
