@@ -5,9 +5,9 @@ import { push } from 'react-router-redux';
 
 export default class FacebookPosts extends Component {
   static propTypes = {
-    params: PropTypes.object
+    prop: PropTypes.object,
+    newProps: PropTypes.number
   };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -15,27 +15,26 @@ export default class FacebookPosts extends Component {
       offset: 0,
       pageNum: 0,
       FBsdk: {},
-      limit: 3,    //постов на одну страничку
-      count: 12   //всего постов
+      limit: 2,    //постов на одну страничку
+      count: 6   //всего постов
     };
     this.click = this.click.bind(this);
   }
 
   componentWillMount() {
     if (typeof window !== 'undefined') {
-      this.loadPostsFacebook();
+      const shift = this.props.newProps.id;
+      this.loadPostsFacebook(shift || null);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.newProps.id);
-
     const selected = nextProps.newProps.id;
     const shift = selected * this.state.limit;
     this.loadFeedNews(shift);
   }
 
-  loadPostsFacebook() {
+  loadPostsFacebook(shift) {
     window.fbAsyncInit = () => {
       FB.init({
         appId: '1824715864406732',
@@ -43,9 +42,8 @@ export default class FacebookPosts extends Component {
         version: 'v2.8'
       });
       this.setState({ FBsdk: FB });
-      this.loadFeedNews();
+      this.loadFeedNews(shift);
       this.loadNewsOnePage();
-
     };
 
     ((d, s, id) => {
@@ -62,7 +60,7 @@ export default class FacebookPosts extends Component {
   loadNewsOnePage() {
     const FB = this.state.FBsdk;
     FB.api(
-      'talkpr/posts?fields=message,picture',
+      'manybeautifulnails/posts?fields=message,picture',
       {
         access_token: '1824715864406732|Jv4js3dY0kP2XvC8-0O8p91Nm2E',
         limit: this.state.count
@@ -77,7 +75,7 @@ export default class FacebookPosts extends Component {
   loadFeedNews(shift) {
     const FB = this.state.FBsdk;
     FB.api(
-      'talkpr/posts?fields=message,picture',
+      'manybeautifulnails/posts?fields=message,picture',
       {
         access_token: '1824715864406732|Jv4js3dY0kP2XvC8-0O8p91Nm2E',
         limit: this.state.limit,
@@ -98,7 +96,6 @@ export default class FacebookPosts extends Component {
     const { posts, pageNum } = this.state;
     return (
       <div className="row">
-        <h1>Facebook</h1>
         <Posts
           posts={posts}
         />
