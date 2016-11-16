@@ -6,7 +6,7 @@ import { push } from 'react-router-redux';
 export default class FacebookPosts extends Component {
   static propTypes = {
     prop: PropTypes.object,
-    newProps: PropTypes.number
+    newProps: PropTypes.object
   };
   constructor(props) {
     super(props);
@@ -14,7 +14,6 @@ export default class FacebookPosts extends Component {
       posts: [],
       offset: 0,
       pageNum: 0,
-      FBsdk: {},
       limit: 2,    //постов на одну страничку
       count: 6   //всего постов
     };
@@ -37,11 +36,10 @@ export default class FacebookPosts extends Component {
   loadPostsFacebook(shift) {
     window.fbAsyncInit = () => {
       FB.init({
-        appId: '1824715864406732',
+        appId: '320242895029311',
         xfbml: false,
         version: 'v2.8'
       });
-      this.setState({ FBsdk: FB });
       this.loadFeedNews(shift);
       this.loadNewsOnePage();
     };
@@ -58,7 +56,6 @@ export default class FacebookPosts extends Component {
   }
 
   loadNewsOnePage() {
-    const FB = this.state.FBsdk;
     FB.api(
       'manybeautifulnails/posts?fields=message,picture',
       {
@@ -73,7 +70,6 @@ export default class FacebookPosts extends Component {
   }
 
   loadFeedNews(shift) {
-    const FB = this.state.FBsdk;
     FB.api(
       'manybeautifulnails/posts?fields=message,picture',
       {

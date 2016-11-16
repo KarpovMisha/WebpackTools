@@ -3,34 +3,34 @@ import React, { Component } from 'react';
 export default class CreatePost extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = {
+      value: '',
+      token: ''
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.login = this.login.bind(this);
     this.insert = this.insert.bind(this);
   }
 
-  componentWillMount() {
-    if (typeof window !== 'undefined') {
-      this.login();
-    }
+  handleChange(event) {
+    this.setState({ value: event.target.value });
   }
 
   login() {
     window.fbAsyncInit = () => {
       FB.init({
-        appId: '1824715864406732',
+        appId: '320242895029311',
         xfbml: false,
         version: 'v2.8'
       });
-
       FB.login((response) => {
-        if (response.authResponse) {
-          console.log('1');
-        } else {
-          alert('Login attempt failed!');
-        }
-      }, { scope: 'publish_actions' });
+        FB.api('/me/accounts',
+          (account) => {
+            this.setState({ token: account.data[0].access_token });
+            console.log(account);
+          });
+      }, { scope: 'publish_pages,manage_pages' });
     };
 
     ((d, s, id) => {
@@ -44,30 +44,15 @@ export default class CreatePost extends Component {
     })(document, 'script', 'facebook-jssdk');
   }
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
-
   insert() {
     FB.api(
-      '/me/feed',
+      '/329024300809178/photos?access_token=' + this.state.token,
       'POST',
       {
-        message: this.state.value
+        message: this.state.value,
+        url: 'http://nailsfoto.com/media/com_mtree/images/listings/m/3265.jpg'
       },
-      (response) => {
-        console.log(response.id);
-      }
-    );
-  }
-
-  remove() {
-    FB.api(
-      '101745953633276_148719255602612',
-      'delete',
-      (response) => {
-        console.log(response);
-      }
+      (response) => console.log(response.id)
     );
   }
 
@@ -77,8 +62,8 @@ export default class CreatePost extends Component {
         <form>
           Create post;
           <input type="text" name="name" onChange={this.handleChange} />
+          <input type="button" value="login" onClick={this.login} />
           <input type="button" value="send" onClick={this.insert} />
-          <input type="button" value="delete" onClick={this.remove} />
         </form>
       </div>
     );

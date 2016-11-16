@@ -14,6 +14,7 @@ export default class Posts extends Component {
         {
           posts.map((c, i) =>
             <Post
+              id={c.id}
               desc={c.message}
               img={c.picture}
               key={i}
