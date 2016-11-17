@@ -9,7 +9,7 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        {/*<CreatePosts />*/}
+        <CreatePosts />
         <FacebookPosts newProps={this.props.params} />
       </div>
     );

@@ -5,52 +5,41 @@ export default class CreatePost extends Component {
     super(props);
     this.state = {
       value: '',
+      url: '',
       token: ''
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeName = this.handleChangeName.bind(this);
+    this.handleChangeUrl = this.handleChangeUrl.bind(this);
     this.login = this.login.bind(this);
     this.insert = this.insert.bind(this);
   }
 
-  handleChange(event) {
+  handleChangeName(event) {
     this.setState({ value: event.target.value });
   }
 
-  login() {
-    window.fbAsyncInit = () => {
-      FB.init({
-        appId: '320242895029311',
-        xfbml: false,
-        version: 'v2.8'
-      });
-      FB.login((response) => {
-        FB.api('/me/accounts',
-          (account) => {
-            this.setState({ token: account.data[0].access_token });
-            console.log(account);
-          });
-      }, { scope: 'publish_pages,manage_pages' });
-    };
+  handleChangeUrl(event) {
+    this.setState({ url: event.target.value });
+  }
 
-    ((d, s, id) => {
-      let js = d.getElementsByTagName(s)[0];
-      const fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s);
-      js.id = id;
-      js.src = '//connect.facebook.net/en_US/sdk/debug.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, 'script', 'facebook-jssdk');
+  login() {
+    FB.login((response) => {
+      FB.api('/me/accounts',
+        (account) => {
+          this.setState({ token: account.data[0].access_token });
+          console.log(account);
+        });
+    }, { scope: 'publish_pages,manage_pages' });
   }
 
   insert() {
     FB.api(
-      '/329024300809178/photos?access_token=' + this.state.token,
+      '/me/photos?access_token=' + this.state.token,
       'POST',
       {
         message: this.state.value,
-        url: 'http://nailsfoto.com/media/com_mtree/images/listings/m/3265.jpg'
+        url: this.state.url
       },
       (response) => console.log(response.id)
     );
@@ -60,8 +49,9 @@ export default class CreatePost extends Component {
     return (
       <div className="newPost">
         <form>
-          Create post;
-          <input type="text" name="name" onChange={this.handleChange} />
+          Create post:
+          <input type="text" name="name" placeholder="Название..." onChange={this.handleChangeName} />
+          <input type="text" name="name" placeholder="URL картинки" onChange={this.handleChangeUrl} />
           <input type="button" value="login" onClick={this.login} />
           <input type="button" value="send" onClick={this.insert} />
         </form>

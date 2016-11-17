@@ -25,7 +25,7 @@ export default class Post extends Component {
       <div className="photo">
         <img src={img} alt="" />
         <div className="desc">{desc}</div>
-        <input type="button" value="update" onClick={this.open} />
+        <input type="button" value="update post" onClick={this.open} />
         {open && <UpdatePost desc={desc} id={id} />}
       </div>
     );

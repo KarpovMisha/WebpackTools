@@ -9,68 +9,60 @@ export default class UpdatePost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: this.props.desc
+      value: this.props.desc,
+      token: '',
+      id: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.updatePost = this.updatePost.bind(this);
-    this.addPost = this.addPost.bind(this);
+    this.login = this.login.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
-  componentWillMount() {
-    if (typeof window !== 'undefined') {
-      this.loadFacebook();
-    }
-  }
-
-  loadFacebook() {
-    window.fbAsyncInit = () => {
-      FB.init({
-        appId: '1824715864406732',
-        xfbml: false,
-        version: 'v2.8'
-      });
-    };
-
-    ((d, s, id) => {
-      let js = d.getElementsByTagName(s)[0];
-      const fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s);
-      js.id = id;
-      js.src = '//connect.facebook.net/en_US/sdk/debug.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, 'script', 'facebook-jssdk');
+  login() {
+    FB.login((response) => {
+      FB.api('/me/accounts',
+        (account) => {
+          console.log(account);
+          this.setState({ token: account.data[0].access_token });
+        }
+      );
+    }, { scope: 'publish_actions,publish_pages,manage_pages' });
   }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
   }
 
-  addPost() {
-
-  }
-
   updatePost() {
-    const { id } = this.props;
+    console.log(this.props.id);
     FB.api(
-      id,
+      this.props.id,
       'POST',
       {
-        message: this.state.value
+        message: this.state.value,
       },
-      (response) => {
-        console.log('111');
-      }
+      (response) => console.log(response)
+    );
+  }
+
+  remove() {
+    console.log(this.props.id);
+    FB.api(
+      this.props.id + '?access_token=' + this.state.token,
+      'DELETE',
+      (response) => console.log(response)
     );
   }
 
   render() {
-    const { desc } = this.props;
+    const { desc, id } = this.props;
     return (
       <div className="updatePost">
         <input type="text" name="name" value={this.state.value} onChange={this.handleChange} />
-        <input type="button" value="add post" onClick={this.addPost} />
-        <input type="button" value="send" onClick={this.updatePost} />
+        <input type="button" value="login" onClick={this.login} />
+        <input type="button" value="change" onClick={this.updatePost} />
+        <input type="button" value="delete" onClick={this.remove} />
       </div>
     );
   }

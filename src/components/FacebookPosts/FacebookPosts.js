@@ -43,16 +43,6 @@ export default class FacebookPosts extends Component {
       this.loadFeedNews(shift);
       this.loadNewsOnePage();
     };
-
-    ((d, s, id) => {
-      let js = d.getElementsByTagName(s)[0];
-      const fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s);
-      js.id = id;
-      js.src = '//connect.facebook.net/en_US/sdk/debug.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, 'script', 'facebook-jssdk');
   }
 
   loadNewsOnePage() {

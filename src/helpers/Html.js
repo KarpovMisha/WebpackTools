@@ -55,7 +55,24 @@ export default class Html extends Component {
           <div dangerouslySetInnerHTML={{__html: ie}} />
           <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
           <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
-
+          <script dangerouslySetInnerHTML={{__html: `
+            (function (d, s, id) {
+              let js = d.getElementsByTagName(s)[0];
+              const fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) {return;}
+              js = d.createElement(s);
+              js.id = id;
+              js.src = '//connect.facebook.net/en_US/sdk/debug.js';
+              fjs.parentNode.insertBefore(js, fjs);
+            })(document, 'script', 'facebook-jssdk');
+              window.fbAsyncInit = () => {
+                FB.init({
+                  appId: '320242895029311',
+                  xfbml: false,
+                  version: 'v2.8'
+                })
+            };
+          `}} charSet="UTF-8"/>
           <script src={assets.javascript.main} />
         </body>
       </html>
