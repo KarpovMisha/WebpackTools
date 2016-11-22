@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { fbLogin } from '../../actions';
 
 export default class UpdatePost extends Component {
   static propTypes = {
@@ -23,10 +24,9 @@ export default class UpdatePost extends Component {
     FB.login((response) => {
       FB.api('/me/accounts',
         (account) => {
-          console.log(account);
           this.setState({ token: account.data[0].access_token });
-        }
-      );
+          console.log(account);
+        });
     }, { scope: 'publish_actions,publish_pages,manage_pages' });
   }
 
@@ -47,7 +47,6 @@ export default class UpdatePost extends Component {
   }
 
   remove() {
-    console.log(this.props.id);
     FB.api(
       this.props.id + '?access_token=' + this.state.token,
       'DELETE',
@@ -59,10 +58,12 @@ export default class UpdatePost extends Component {
     const { desc, id } = this.props;
     return (
       <div className="updatePost">
-        <input type="text" name="name" value={this.state.value} onChange={this.handleChange} />
-        <input type="button" value="login" onClick={this.login} />
-        <input type="button" value="change" onClick={this.updatePost} />
-        <input type="button" value="delete" onClick={this.remove} />
+        <button type="button" onClick={this.login}>Login</button>
+        <form>
+          <input type="text" name="name" value={this.state.value} onChange={this.handleChange} />
+          <button type="button" onClick={this.remove}>Delete</button>
+          <button type="button" onClick={this.updatePost}>Change</button>
+        </form>
       </div>
     );
   }

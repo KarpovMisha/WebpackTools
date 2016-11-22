@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { FacebookPosts, CreatePosts } from 'components';
+import { FacebookPosts, CreatePosts, ToDoList } from 'components';
 
 export default class Home extends Component {
   static propTypes = {
@@ -9,8 +9,9 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <CreatePosts />
-        <FacebookPosts newProps={this.props.params} />
+        <ToDoList />
+        {/*<CreatePosts />
+        <FacebookPosts newProps={this.props.params} />*/}
       </div>
     );
   }

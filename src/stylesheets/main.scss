@@ -33,3 +33,13 @@ body{
 input{
   display: block;
 }
+
+.todolist{
+  input{
+    float: left;
+  }
+}
+
+.controlGroup{
+  padding-top: 20px;
+}

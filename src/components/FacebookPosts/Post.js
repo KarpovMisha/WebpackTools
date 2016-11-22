@@ -7,6 +7,7 @@ export default class Post extends Component {
     desc: PropTypes.string,
     img: PropTypes.string.isRequired
   }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +26,7 @@ export default class Post extends Component {
       <div className="photo">
         <img src={img} alt="" />
         <div className="desc">{desc}</div>
-        <input type="button" value="update post" onClick={this.open} />
+        <button type="button" onClick={this.open}>Update post</button>
         {open && <UpdatePost desc={desc} id={id} />}
       </div>
     );
