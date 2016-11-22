@@ -26,13 +26,14 @@ export default class AddItems extends Component {
   }
 
   mark(id) {
-    const changeStatus = this.state.todo[id].status;
+    const retList = JSON.parse(localStorage.todos);
+    const changeStatus = retList[id].status;
     if (changeStatus === false) {
-      this.state.todo[id].status = true;
+      retList[id].status = true;
     } else if (changeStatus === true) {
-      this.state.todo[id].status = false;
+      retList[id].status = false;
     }
-    console.log(this.state.todo[id]);
+    console.log(retList[id]);
   }
 
   allItems() {

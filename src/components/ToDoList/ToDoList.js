@@ -38,7 +38,6 @@ export default class ToDoList extends Component {
 
     this.setState({ todo });
     localStorage.setItem('todos', JSON.stringify(todo));
-    const retList = JSON.parse(localStorage.todos);
   }
 
   render() {
