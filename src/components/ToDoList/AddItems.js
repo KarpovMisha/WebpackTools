@@ -3,62 +3,35 @@ import AddItem from './AddItem';
 
 export default class AddItems extends Component {
   static propTypes = {
-    todo: PropTypes.array
+    todo: PropTypes.array,
+    remove: PropTypes.func,
+    mark: PropTypes.func,
+    allItems: PropTypes.func,
+    activeItems: PropTypes.func,
+    completedItems: PropTypes.func
   }
 
   constructor(props) {
     super(props);
-    this.state = {
-      todo: this.props.todo
-    };
-    this.remove = this.remove.bind(this);
     this.allItems = this.allItems.bind(this);
     this.activeItems = this.activeItems.bind(this);
     this.completedItems = this.completedItems.bind(this);
-    this.mark = this.mark.bind(this);
-  }
-
-  remove(id) {
-    const { todo } = this.state;
-    const arr = todo.splice(id, 1);
-    this.setState({ todo });
-    localStorage.setItem('todos', JSON.stringify(todo));
-  }
-
-  mark(id) {
-    const retList = JSON.parse(localStorage.todos);
-    const changeStatus = retList[id].status;
-    if (changeStatus === false) {
-      retList[id].status = true;
-    } else if (changeStatus === true) {
-      retList[id].status = false;
-    }
-    console.log(retList[id]);
   }
 
   allItems() {
-    const retList = JSON.parse(localStorage.todos);
-    this.setState({ todo: retList });
+    this.props.allItems();
   }
 
   activeItems() {
-    const { todo } = this.state;
-    const arr = todo.filter((id) => {
-      return id.status === false;
-    });
-    this.setState({ todo: arr });
+    this.props.activeItems();
   }
 
   completedItems() {
-    const { todo } = this.state;
-    const arr = todo.filter((id) => {
-      return id.status === true;
-    });
-    this.setState({ todo: arr });
+    this.props.completedItems();
   }
 
   render() {
-    const { todo } = this.state;
+    const { todo } = this.props;
     return (
       <div>
         {
@@ -67,15 +40,16 @@ export default class AddItems extends Component {
               desc={c.item}
               id={i}
               key={i}
-              remove={this.remove}
-              mark={this.mark}
+              remove={this.props.remove}
+              mark={this.props.mark}
+              status={c.status}
             />
           )
         }
         <div className="controlGroup">
-          <button type="button" onClick={this.allItems}>All</button>
-          <button type="button" onClick={this.activeItems}>Active</button>
-          <button type="button" onClick={this.completedItems}>Completed</button>
+          <button type="button" onClick={this.props.allItems}>All</button>
+          <button type="button" onClick={this.props.activeItems}>Active</button>
+          <button type="button" onClick={this.props.completedItems}>Completed</button>
         </div>
       </div>
     );
