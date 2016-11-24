@@ -11,25 +11,6 @@ export default class AddItems extends Component {
     completedItems: PropTypes.func
   }
 
-  constructor(props) {
-    super(props);
-    this.allItems = this.allItems.bind(this);
-    this.activeItems = this.activeItems.bind(this);
-    this.completedItems = this.completedItems.bind(this);
-  }
-
-  allItems() {
-    this.props.allItems();
-  }
-
-  activeItems() {
-    this.props.activeItems();
-  }
-
-  completedItems() {
-    this.props.completedItems();
-  }
-
   render() {
     const { todo } = this.props;
     return (

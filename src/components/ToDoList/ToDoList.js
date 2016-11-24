@@ -74,17 +74,13 @@ export default class ToDoList extends Component {
 
   activeItems() {
     const retList = JSON.parse(localStorage.todos);
-    const arr = retList.filter((id) => {
-      return id.status === false;
-    });
+    const arr = retList.filter((id) => id.status === false);
     this.setState({ todo: arr });
   }
 
   completedItems() {
     const retList = JSON.parse(localStorage.todos);
-    const arr = retList.filter((id) => {
-      return id.status === true;
-    });
+    const arr = retList.filter((id) => id.status === true);
     this.setState({ todo: arr });
   }
 
@@ -105,4 +101,3 @@ export default class ToDoList extends Component {
     );
   }
 }
-

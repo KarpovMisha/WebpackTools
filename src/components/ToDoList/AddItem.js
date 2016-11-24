@@ -9,29 +9,13 @@ export default class AddItem extends Component {
     status: PropTypes.bool
   }
 
-  constructor(props) {
-    super(props);
-    this.remove = this.remove.bind(this);
-    this.mark = this.mark.bind(this);
-  }
-
-  remove() {
-    const { id } = this.props;
-    this.props.remove(id);
-  }
-
-  mark() {
-    const { id } = this.props;
-    this.props.mark(id);
-  }
-
   render() {
-    const { desc, id, status } = this.props;
+    const { desc, status, remove, mark, id } = this.props;
     return (
       <div className="addItem">
-        <input type="checkbox" checked={status} onClick={this.mark}></input>
+        <input type="checkbox" checked={status} onClick={() => mark(id)}></input>
         {desc}
-        <button type="button" onClick={this.remove}>Delete</button>
+        <button type="button" onClick={() => remove(id)}>Delete</button>
       </div>
     );
   }
