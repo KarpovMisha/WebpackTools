@@ -7,7 +7,8 @@ export default class ToDoList extends Component {
     super(props);
     this.state = {
       item: '',
-      todo: []
+      todo: [],
+      filtr: []
     };
     this.handleItems = this.handleItems.bind(this);
     this.addItems = this.addItems.bind(this);
@@ -43,6 +44,7 @@ export default class ToDoList extends Component {
       status: false
     });
     this.setState({ todo });
+    this.setState({ filtr: todo });
     localStorage.setItem('todos', JSON.stringify(todo));
     //console.log(result);
     //return result;
@@ -64,23 +66,24 @@ export default class ToDoList extends Component {
       retList[id].status = false;
     }
     this.setState({ todo: retList });
+    this.setState({ filtr: retList });
     localStorage.setItem('todos', JSON.stringify(retList));
   }
 
   allItems() {
-    const retList = JSON.parse(localStorage.todos);
-    this.setState({ todo: retList });
+    const { filtr } = this.state;
+    this.setState({ todo: filtr });
   }
 
   activeItems() {
-    const retList = JSON.parse(localStorage.todos);
-    const arr = retList.filter((id) => id.status === false);
+    const { filtr } = this.state;
+    const arr = filtr.filter((id) => id.status === false);
     this.setState({ todo: arr });
   }
 
   completedItems() {
-    const retList = JSON.parse(localStorage.todos);
-    const arr = retList.filter((id) => id.status === true);
+    const { filtr } = this.state;
+    const arr = filtr.filter((id) => id.status === true);
     this.setState({ todo: arr });
   }
 

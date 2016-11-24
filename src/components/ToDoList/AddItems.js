@@ -14,7 +14,7 @@ export default class AddItems extends Component {
   render() {
     const { todo } = this.props;
     return (
-      <div>
+      <div className="items">
         {
           todo.map((c, i) =>
             <AddItem
