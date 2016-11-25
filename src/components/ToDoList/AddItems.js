@@ -8,15 +8,18 @@ export default class AddItems extends Component {
     mark: PropTypes.func,
     allItems: PropTypes.func,
     activeItems: PropTypes.func,
-    completedItems: PropTypes.func
+    completedItems: PropTypes.func,
+    show: PropTypes.object
   }
 
   render() {
-    const { todo } = this.props;
+    const { todo, show } = this.props;
     return (
       <div className="items">
         {
-          todo.map((c, i) =>
+          todo.filter((id) => {
+            return id.status === show.a || id.status === show.c;
+          }).map((c, i) =>
             <AddItem
               desc={c.item}
               id={i}
