@@ -9,7 +9,7 @@ export default class AddItems extends Component {
     allItems: PropTypes.func,
     activeItems: PropTypes.func,
     completedItems: PropTypes.func,
-    show: PropTypes.object
+    show: PropTypes.string
   }
 
   render() {
@@ -18,7 +18,12 @@ export default class AddItems extends Component {
       <div className="items">
         {
           todo.filter((id) => {
-            return id.status === show.a || id.status === show.c;
+            if (show === 'completed') {
+              return id.status === false;
+            } else if (show === 'active') {
+              return id.status === true;
+            }
+            return todo;
           }).map((c, i) =>
             <AddItem
               desc={c.item}
